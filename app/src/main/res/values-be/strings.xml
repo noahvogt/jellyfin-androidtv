@@ -51,7 +51,6 @@
     <string name="lbl_favorite">Любімае</string>
     <string name="lbl_watched">Прагледжанае</string>
     <string name="lbl_sd">SD</string>
-    <string name="lbl_min">" хв"</string>
     <string name="lbl_people">Людзі</string>
     <string name="lbl_videos">Відэа</string>
     <string name="lbl_recordings">Запісы</string>
@@ -313,7 +312,7 @@
     <string name="lbl_bitstream_ac3">Гук Bitstream Dolby Digital</string>
     <string name="desc_bitstream_ac3">Патрабуецца адпаведнае абсталяванне</string>
     <string name="pref_crash_reports_disabled">Справаздачы аб збоях адпраўляцца не будуць</string>
-    <string name="app_notification_beta">Праграма абноўлена да %1$s 
+    <string name="app_notification_beta">Праграма абноўлена да %1$s
 \nДзякуй за ўдзел у бэта-тэсце Jellyfin.</string>
     <string name="discovered_servers_title">Выяўленыя серверы</string>
     <string name="no_player_message">Здаецца, у вас не ўсталявана праграма для відэа. Гэтая опцыя патрабуе ўсталявання старонняй праграмы для прайгравання відэакантэнту.</string>
