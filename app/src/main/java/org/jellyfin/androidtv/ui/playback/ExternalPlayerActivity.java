@@ -30,6 +30,7 @@ import org.jellyfin.androidtv.util.sdk.compat.JavaCompat;
 import org.jellyfin.apiclient.interaction.Response;
 import org.jellyfin.apiclient.model.dlna.SubtitleDeliveryMethod;
 import org.jellyfin.sdk.api.client.ApiClient;
+import org.jellyfin.sdk.model.api.BaseItemDto;
 import org.jellyfin.sdk.model.api.BaseItemKind;
 import org.koin.java.KoinJavaComponent;
 
@@ -159,6 +160,11 @@ public class ExternalPlayerActivity extends FragmentActivity {
             // less than a second - probably no player explain the option
             Timber.i("Playback took less than a second - assuming it failed");
             if (!noPlayerError) handlePlayerError();
+            return;
+        }
+
+        if (Utils.getLetExternalPlayerHandlePlaybackStateUpdates(userPreferences.getValue())) {
+            playNext();
             return;
         }
 
@@ -374,7 +380,9 @@ public class ExternalPlayerActivity extends FragmentActivity {
 
         try {
             mLastPlayerStart = Instant.now().toEpochMilli();
-            reportingHelper.getValue().reportStart(item, mPosition * RUNTIME_TICKS_TO_MS);
+            if (!Utils.getLetExternalPlayerHandlePlaybackStateUpdates(userPreferences.getValue())) {
+                reportingHelper.getValue().reportStart(item, mPosition * RUNTIME_TICKS_TO_MS);
+            }
             startReportLoop();
             startActivityForResult(external, 1);
         } catch (ActivityNotFoundException e) {

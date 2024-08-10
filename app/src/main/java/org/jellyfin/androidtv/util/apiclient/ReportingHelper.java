@@ -1,11 +1,15 @@
 package org.jellyfin.androidtv.util.apiclient;
 
+import static org.koin.java.KoinJavaComponent.inject;
+
 import androidx.annotation.Nullable;
 
 import org.jellyfin.androidtv.data.compat.StreamInfo;
 import org.jellyfin.androidtv.data.model.DataRefreshService;
+import org.jellyfin.androidtv.preference.UserPreferences;
 import org.jellyfin.androidtv.ui.playback.PlaybackController;
 import org.jellyfin.androidtv.ui.playback.PlaybackManager;
+import org.jellyfin.androidtv.util.Utils;
 import org.jellyfin.apiclient.interaction.ApiClient;
 import org.jellyfin.apiclient.interaction.EmptyResponse;
 import org.jellyfin.apiclient.model.session.PlaybackProgressInfo;
@@ -23,14 +27,18 @@ public class ReportingHelper {
     private final Lazy<PlaybackManager> playbackManager = KoinJavaComponent.<PlaybackManager>inject(PlaybackManager.class);
     private final Lazy<DataRefreshService> dataRefreshService = KoinJavaComponent.<DataRefreshService>inject(DataRefreshService.class);
     private final Lazy<ApiClient> apiClient = KoinJavaComponent.<ApiClient>inject(ApiClient.class);
+    private Lazy<UserPreferences> userPreferences = inject(UserPreferences.class);
 
     public void reportStopped(org.jellyfin.sdk.model.api.BaseItemDto item, StreamInfo streamInfo, long pos) {
         if (item != null && streamInfo != null) {
             Timber.i("ReportingHelper.reportStopped called for " + item.getId() + " at position " + pos);
-            PlaybackStopInfo info = new PlaybackStopInfo();
-            info.setItemId(item.getId().toString());
-            info.setPositionTicks(pos);
-            playbackManager.getValue().reportPlaybackStopped(info, streamInfo, apiClient.getValue(), new EmptyResponse());
+
+            if (!Utils.getLetExternalPlayerHandlePlaybackStateUpdates(userPreferences.getValue())) {
+                PlaybackStopInfo info = new PlaybackStopInfo();
+                info.setItemId(item.getId().toString());
+                info.setPositionTicks(pos);
+                playbackManager.getValue().reportPlaybackStopped(info, streamInfo, apiClient.getValue(), new EmptyResponse());
+            }
 
             dataRefreshService.getValue().setLastPlayback(Instant.now());
             switch (item.getType()) {

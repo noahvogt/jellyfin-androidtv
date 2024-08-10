@@ -60,9 +60,14 @@ class PlaybackAdvancedPreferencesScreen : OptionsFragment() {
 				bind(userPreferences, UserPreferences.refreshRateSwitchingBehavior)
 			}
 
-			checkbox{
+			checkbox {
 				setTitle(R.string.pref_external_player)
 				bind(userPreferences, UserPreferences.useExternalPlayer)
+			}
+
+			checkbox {
+				setTitle(R.string.let_external_player_handle_playback_state_updates)
+				bind(userPreferences, UserPreferences.letExternalPlayerHandlePlaybackStateUpdates)
 			}
 		}
 

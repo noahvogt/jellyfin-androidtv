@@ -86,6 +86,11 @@ object Utils : KoinComponent {
 	}
 
 	@JvmStatic
+	fun getLetExternalPlayerHandlePlaybackStateUpdates(userPreferences: UserPreferences): Boolean {
+		return userPreferences[UserPreferences.letExternalPlayerHandlePlaybackStateUpdates];
+	}
+
+	@JvmStatic
 	fun getThemeColor(context: Context, resourceId: Int): Int {
 		val styledAttributes = context.theme.obtainStyledAttributes(intArrayOf(resourceId))
 		val themeColor = styledAttributes.getColor(0, 0)

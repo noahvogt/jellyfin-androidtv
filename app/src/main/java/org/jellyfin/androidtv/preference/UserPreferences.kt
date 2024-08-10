@@ -93,6 +93,11 @@ class UserPreferences(context: Context) : SharedPreferenceStore(
 		 */
 		var refreshRateSwitchingBehavior = enumPreference("refresh_rate_switching_behavior", RefreshRateSwitchingBehavior.DISABLED)
 
+		/**
+		 * Whether to display the mark watched popup when using an external playback application.
+		 */
+		var letExternalPlayerHandlePlaybackStateUpdates = booleanPreference("let_external_player_handle_playback_state_updates", false)
+
 		/* Playback - Audio related */
 		/**
 		 * Preferred behavior for audio streaming.
